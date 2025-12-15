@@ -38,6 +38,9 @@ yarn-error.log*
 .env.production.local
 !.env.example
 
+# test/utility scripts with credentials
+createTestUser.js
+
 # vercel
 .vercel
 
