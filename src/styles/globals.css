@@ -1,3 +1,26 @@
+@import "tailwindcss";
+
+/* Define your theme colors using @theme */
+@theme {
+  --color-cream:    #f5eedc;   /* main background */
+  --color-mint:     #7ae2cf;   /* highlights, buttons */
+  --color-teal:     #128083;   /* accents, headers */
+  --color-darkblue: #061e24;   /* text, footers, dark backgrounds */
+
+  /* Extra harmonious colors */
+  --color-gold:     #d4af37;
+  --color-blush:    #f7c6c7;
+  --color-navy:     #223a4a;
+  --color-gray:     #bfcad0;
+  --color-palegray: #e7ecef;
+  --color-olive:    #7abf9e;
+  --color-coral:    #ffb3ab;
+  --color-yellow:   #ffe066;
+  --color-powder:   #b0e0e6;
+  --color-chestnut: #5d2f27;
+}
+
+/* Import Tailwind layers */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
