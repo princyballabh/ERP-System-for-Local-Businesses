@@ -19,8 +19,3 @@
   --color-powder:   #b0e0e6;
   --color-chestnut: #5d2f27;
 }
-
-/* Import Tailwind layers */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;

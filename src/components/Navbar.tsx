@@ -35,7 +35,7 @@ export default function Navbar() {
       </nav>
       {/* Logout button at the bottom */}
       <button
-        onClick={() => signOut({ callbackUrl: "/signin" })}
+        onClick={() => signOut({ callbackUrl: "/api/auth/signin" })}
         className="flex items-center gap-3 px-4 py-3 m-4 mb-30 rounded-lg bg-red-600 hover:bg-red-700 transition-colors text-white"
       >
         <FaSignOutAlt className="text-xl" />

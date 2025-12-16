@@ -30,7 +30,7 @@ if (!mongoose.connections[0].readyState) {
   mongoose.connect(process.env.MONGODB_URI!);
 }
 
-export const authOptions = {
+const authOptions = {
   adapter: MongoDBAdapter(clientPromise),
   providers: [
     CredentialsProvider({

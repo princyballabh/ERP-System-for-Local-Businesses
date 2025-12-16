@@ -1,16 +1,16 @@
 const bcrypt = require("bcryptjs");
 const { MongoClient } = require("mongodb");
-require('dotenv').config({ path: '.env.local' });
+require("dotenv").config({ path: ".env.local" });
 
 async function main() {
   console.log("Starting test user creation script...");
   const uri = process.env.MONGODB_URI;
-  
+
   if (!uri) {
     console.error("Error: MONGODB_URI not found in .env.local");
     process.exit(1);
   }
-  
+
   const dbName = "test";
 
   const client = new MongoClient(uri);
