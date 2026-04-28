@@ -8,5 +8,6 @@ export const config = {
     '/sales',
     '/billing',
     '/ledger',
+    '/gst-calculator',
   ]
 };
