@@ -20,10 +20,13 @@ RUN npm ci
 # Copy the rest of the app (including ml_models/ with the .pkl).
 COPY . .
 
-# next-auth reads NEXTAUTH_URL while prerendering pages during the build.
-# Provide a valid placeholder so the build never fails; Render's real
-# NEXTAUTH_URL environment variable overrides this at runtime.
+# `next build` evaluates the auth route + lib/mongodb.ts at build time, which
+# require these vars to merely EXIST (no real connection is made during build).
+# These placeholders only satisfy the build; Render's real environment variables
+# override all of them at runtime.
 ENV NEXTAUTH_URL=https://placeholder.onrender.com
+ENV NEXTAUTH_SECRET=build-time-placeholder-secret
+ENV MONGODB_URI=mongodb://placeholder:27017/placeholder
 
 # Build the Next.js production bundle.
 RUN npm run build
