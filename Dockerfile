@@ -20,6 +20,11 @@ RUN npm ci
 # Copy the rest of the app (including ml_models/ with the .pkl).
 COPY . .
 
+# next-auth reads NEXTAUTH_URL while prerendering pages during the build.
+# Provide a valid placeholder so the build never fails; Render's real
+# NEXTAUTH_URL environment variable overrides this at runtime.
+ENV NEXTAUTH_URL=https://placeholder.onrender.com
+
 # Build the Next.js production bundle.
 RUN npm run build
 
