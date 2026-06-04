@@ -3,8 +3,9 @@ FROM node:22-bookworm-slim
 
 # Install Python 3 + pip so the inventory predict route can run ml_models/inference.py.
 # `python-is-python3` makes the `python` command (used by spawn('python')) available.
+# python3/pip to run the model; libgomp1 is the OpenMP runtime LightGBM needs.
 RUN apt-get update && apt-get install -y --no-install-recommends \
-      python3 python3-pip python-is-python3 \
+      python3 python3-pip python-is-python3 libgomp1 \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
