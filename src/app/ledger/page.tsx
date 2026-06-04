@@ -121,7 +121,7 @@ export default function LedgerPage() {
   const partyNames = Array.from(new Set(entries.map((e) => e.partyName)));
 
   return (
-    <div className="p-8 bg-gradient-to-b from-mint to-cream min-h-screen">
+    <div className="p-4 md:p-8 bg-gradient-to-b from-mint to-cream min-h-screen">
       {/* KPIs */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <Card title="Total Udhaar Outstanding" value={`₹${totalOutstanding}`} />
@@ -164,8 +164,8 @@ export default function LedgerPage() {
 
       {/* Add Udhaar Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-          <div className="bg-white p-6 rounded shadow-lg min-w-[320px] relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 p-4">
+          <div className="bg-white p-6 rounded shadow-lg w-full max-w-md max-h-[90vh] overflow-y-auto relative">
             <button
               className="absolute top-2 right-2 text-gray-500 hover:text-black"
               onClick={() => setShowAddModal(false)}
@@ -173,7 +173,7 @@ export default function LedgerPage() {
               &times;
             </button>
             <form className="flex flex-col gap-3" onSubmit={handleAddUdhaar}>
-              <div className="flex flex-row gap-2">
+              <div className="flex flex-col gap-2">
                 <label className="text-navy font-semibold">Party Name</label>
                 <input
                   className="border p-2 rounded"
@@ -255,8 +255,8 @@ export default function LedgerPage() {
 
       {/* Settle Udhaar Modal */}
       {showSettleId && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-          <div className="bg-white p-6 rounded shadow-lg min-w-[320px] relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 p-4">
+          <div className="bg-white p-6 rounded shadow-lg w-full max-w-md max-h-[90vh] overflow-y-auto relative">
             <button
               className="absolute top-2 right-2 text-gray-500 hover:text-black"
               onClick={() => setShowSettleId(null)}
@@ -313,7 +313,7 @@ export default function LedgerPage() {
 
       {/* Udhaar Table */}
       <div className="overflow-x-auto bg-cream rounded shadow">
-        <table className="min-w-full text-sm">
+        <table className="min-w-full text-sm responsive-table">
           <thead>
             <tr className="bg-mint text-navy">
               <th className="py-2 px-4">Party</th>
@@ -331,13 +331,14 @@ export default function LedgerPage() {
           <tbody>
             {entries.map((entry) => (
               <tr key={entry._id} className="border-b border-mint">
-                <td className="py-2 px-4">{entry.partyName}</td>
-                <td className="py-2 px-4">{entry.contact}</td>
-                <td className="py-2 px-4">₹{entry.amount}</td>
-                <td className="py-2 px-4">₹{entry.paidAmount || 0}</td>
-                <td className="py-2 px-4">{entry.dateGiven?.slice(0, 10)}</td>
-                <td className="py-2 px-4">{entry.dueDate?.slice(0, 10)}</td>
+                <td className="py-2 px-4" data-label="Party">{entry.partyName}</td>
+                <td className="py-2 px-4" data-label="Contact">{entry.contact}</td>
+                <td className="py-2 px-4" data-label="Amount">₹{entry.amount}</td>
+                <td className="py-2 px-4" data-label="Paid">₹{entry.paidAmount || 0}</td>
+                <td className="py-2 px-4" data-label="Date">{entry.dateGiven?.slice(0, 10)}</td>
+                <td className="py-2 px-4" data-label="Due">{entry.dueDate?.slice(0, 10)}</td>
                 <td
+                  data-label="Status"
                   className={`py-2 px-4 font-semibold ${
                     statusColor[entry.status]
                   }`}
@@ -347,11 +348,11 @@ export default function LedgerPage() {
                     {entry.status}
                   </span>
                 </td>
-                <td className="py-2 px-4">
+                <td className="py-2 px-4" data-label="Last Payment">
                   {entry.lastPaymentDate?.slice(0, 10) || "-"}
                 </td>
-                <td className="py-2 px-4">{entry.notes}</td>
-                <td className="py-2 px-4">
+                <td className="py-2 px-4" data-label="Notes">{entry.notes}</td>
+                <td className="py-2 px-4" data-label="Actions">
                   {entry.status !== "Paid" && (
                     <button
                       className="bg-teal text-cream px-2 py-1 rounded text-xs"

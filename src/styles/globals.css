@@ -19,3 +19,39 @@
   --color-powder:   #b0e0e6;
   --color-chestnut: #5d2f27;
 }
+
+/* Basic responsive tables: stack each row into a labelled card on mobile */
+@media (max-width: 767px) {
+  table.responsive-table thead {
+    display: none;
+  }
+  table.responsive-table tr {
+    display: block;
+    margin-bottom: 0.75rem;
+    border-radius: 0.5rem;
+    background: #ffffff;
+    padding: 0.25rem 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+  table.responsive-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    text-align: right;
+    padding: 0.4rem 0.25rem !important;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  table.responsive-table tr td:last-child {
+    border-bottom: none;
+  }
+  table.responsive-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--color-navy);
+    text-align: left;
+  }
+  table.responsive-table td:empty {
+    display: none;
+  }
+}

@@ -19,6 +19,12 @@ export async function GET(req: NextRequest) {
     return acc;
   }, {} as Record<string, number>);
 
+  const categoryCounts = inventory.reduce((acc, item) => {
+    const category = item.category || 'Uncategorized';
+    acc[category] = (acc[category] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
   // Sales KPIs and Sales Trend
   const sales = await Sale.find();
   const totalSalesOrders = sales.length;
@@ -69,6 +75,7 @@ export async function GET(req: NextRequest) {
       revenue: trendRevenue
     },
     inventory_status_counts: statusCounts,
+    inventory_category_counts: categoryCounts,
     user: "User"
   });
 }

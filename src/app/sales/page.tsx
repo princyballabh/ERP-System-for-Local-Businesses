@@ -128,7 +128,7 @@ export default function SalesPage() {
     }));
 
   return (
-    <div className="p-8 bg-gradient-to-b from-mint to-cream min-h-screen">
+    <div className="p-4 md:p-8 bg-gradient-to-b from-mint to-cream min-h-screen">
       {/* KPIs */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <Card
@@ -175,8 +175,8 @@ export default function SalesPage() {
 
       {/* Add Sale Form Modal */}
       {showForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-          <div className="bg-white p-6 rounded shadow-lg min-w-[320px] relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 p-4">
+          <div className="bg-white p-6 rounded shadow-lg w-full max-w-lg max-h-[90vh] overflow-y-auto relative">
             <button
               className="absolute top-2 right-2 text-gray-500 hover:text-black"
               onClick={() => setShowForm(false)}
@@ -223,9 +223,9 @@ export default function SalesPage() {
               <div>
                 <div className="font-semibold mb-1">Products</div>
                 {form.products.map((p, idx) => (
-                  <div key={idx} className="flex gap-2 mb-2">
+                  <div key={idx} className="flex flex-col sm:flex-row gap-2 mb-2">
                     <select
-                      className="border p-2 rounded"
+                      className="border p-2 rounded flex-1 min-w-0"
                       required
                       value={p.productName}
                       onChange={(e) => {
@@ -320,7 +320,7 @@ export default function SalesPage() {
 
       {/* Sales Table */}
       <div className="overflow-x-auto bg-cream rounded shadow">
-        <table className="min-w-full text-sm text-center">
+        <table className="min-w-full text-sm text-center responsive-table">
           <thead>
             <tr className="bg-mint text-navy text-center">
               <th className="py-2 px-4">Order ID</th>
@@ -339,27 +339,27 @@ export default function SalesPage() {
                 <tr key={sale._id + i} className="border-b border-mint">
                   {i === 0 && (
                     <>
-                      <td className="py-2 px-4" rowSpan={sale.products.length}>
+                      <td className="py-2 px-4" data-label="Order ID" rowSpan={sale.products.length}>
                         {sale.orderId}
                       </td>
-                      <td className="py-2 px-4" rowSpan={sale.products.length}>
+                      <td className="py-2 px-4" data-label="Invoice #" rowSpan={sale.products.length}>
                         {sale.invoiceNumber}
                       </td>
-                      <td className="py-2 px-4" rowSpan={sale.products.length}>
+                      <td className="py-2 px-4" data-label="Date" rowSpan={sale.products.length}>
                         {sale.date?.slice(0, 10)}
                       </td>
-                      <td className="py-2 px-4" rowSpan={sale.products.length}>
+                      <td className="py-2 px-4" data-label="Customer" rowSpan={sale.products.length}>
                         {sale.customerName}
                       </td>
                     </>
                   )}
-                  <td className="py-2 px-4">{p.productName}</td>
-                  <td className="py-2 px-4">{p.quantity}</td>
-                  <td className="py-2 px-4">
+                  <td className="py-2 px-4" data-label="Product">{p.productName}</td>
+                  <td className="py-2 px-4" data-label="Qty">{p.quantity}</td>
+                  <td className="py-2 px-4" data-label="Unit Price">
                     <FaRupeeSign className="inline text-teal mr-1" />
                     {p.unitPrice}
                   </td>
-                  <td className="py-2 px-4">
+                  <td className="py-2 px-4" data-label="Total">
                     <FaRupeeSign className="inline text-teal mr-1" />
                     {p.totalAmount}
                   </td>

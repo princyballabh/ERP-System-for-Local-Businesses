@@ -101,7 +101,7 @@ export default function AIChatbot() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 bg-teal hover:bg-navy text-white rounded-full p-4 shadow-lg transition-all duration-300 hover:scale-110 z-50"
+          className="fixed bottom-20 md:bottom-6 right-4 md:right-6 bg-teal hover:bg-navy text-white rounded-full p-4 shadow-lg transition-all duration-300 hover:scale-110 z-50"
           aria-label="Open AI Assistant"
         >
           <FaRobot className="text-2xl" />
@@ -110,7 +110,7 @@ export default function AIChatbot() {
 
       {/* Chat Modal */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 w-96 h-[600px] bg-white rounded-2xl shadow-2xl flex flex-col z-50 border border-gray-200">
+        <div className="fixed bottom-20 md:bottom-6 right-4 md:right-6 w-[calc(100%-2rem)] md:w-96 h-[80vh] md:h-[600px] bg-white rounded-2xl shadow-2xl flex flex-col z-50 border border-gray-200">
           {/* Header */}
           <div className="bg-gradient-to-r from-teal to-mint text-white p-4 rounded-t-2xl flex items-center justify-between">
             <div className="flex items-center gap-3">

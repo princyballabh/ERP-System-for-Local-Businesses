@@ -51,14 +51,14 @@ export default function DashboardPage() {
   const productQuantities = topProducts.map((p: any) => p[1]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-cream to-mint p-8">
+    <div className="min-h-screen bg-gradient-to-br from-cream to-mint p-4 md:p-8">
       {/* Welcome */}
-      <h1 className="text-3xl md:text-4xl font-bold text-navy mb-8 text-center">
+      <h1 className="text-2xl md:text-4xl font-bold text-navy mb-6 md:mb-8 text-center">
         Welcome, {data.user}
       </h1>
 
       {/* Top 4 Compact Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8 md:mb-10">
         <div className="bg-white rounded-xl shadow p-4 flex flex-col items-center">
           <FaShoppingCart className="text-2xl text-teal mb-2" />
           <div className="text-xl font-bold text-navy">
@@ -188,16 +188,16 @@ export default function DashboardPage() {
             height={250}
           />
         </div>
-        {/* Inventory Status Pie Chart */}
+        {/* Inventory Categories Pie Chart */}
         <div className="bg-white rounded-xl shadow p-6 flex flex-col items-center">
-          <h2 className="text-xl font-bold text-navy mb-4">Inventory Status</h2>
+          <h2 className="text-xl font-bold text-navy mb-4">Stock by Category</h2>
           <Pie
             data={{
-              labels: Object.keys(data.inventory_status_counts),
+              labels: Object.keys(data.inventory_category_counts || {}),
               datasets: [
                 {
-                  data: Object.values(data.inventory_status_counts),
-                  backgroundColor: ["#14b8a6", "#facc15", "#ef4444", "#6366f1"],
+                  data: Object.values(data.inventory_category_counts || {}),
+                  backgroundColor: ["#14b8a6", "#facc15", "#ef4444", "#6366f1", "#ec4899", "#8b5cf6", "#10b981", "#f97316", "#06b6d4", "#f43f5e"],
                   borderWidth: 2,
                 },
               ],

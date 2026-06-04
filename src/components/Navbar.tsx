@@ -21,37 +21,34 @@ const navItems = [
 
 export default function Navbar() {
   return (
-    <aside className="fixed left-0 top-0 h-screen w-56 bg-darkblue text-white flex flex-col shadow-lg">
-      <div className="p-6 text-2xl font-bold tracking-wide">ERP System</div>
-      <nav className="flex-1 flex flex-col gap-2 px-2">
+    <aside className="fixed bottom-0 md:bottom-auto md:left-0 md:top-0 md:h-screen w-full md:w-56 bg-darkblue text-white flex flex-row md:flex-col shadow-lg z-50">
+      <div className="hidden md:block p-6 text-2xl font-bold tracking-wide">ERP System</div>
+      <nav className="flex-1 flex flex-row md:flex-col gap-1 md:gap-2 px-2 py-2 md:py-0 overflow-x-auto justify-around md:justify-start items-center md:items-stretch">
         {navItems.map((item) => (
           <Link
             key={item.name}
             href={item.path}
-            className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-teal transition-colors"
+            className="flex flex-col md:flex-row items-center gap-1 md:gap-3 p-2 md:px-4 md:py-3 rounded-lg hover:bg-teal transition-colors flex-shrink-0"
           >
-            <span className="text-xl">{item.icon}</span>
-            <span className="text-base">{item.name}</span>
+            <span className="text-2xl md:text-xl">{item.icon}</span>
+            <span className="text-xs md:text-base hidden md:inline">{item.name}</span>
           </Link>
         ))}
-      </nav>
-      <div className="px-2 pb-3">
         <Link
           href="/gst-calculator"
-          className="flex items-center gap-3 px-4 py-3 mx-2 rounded-xl bg-gradient-to-r from-teal to-mint text-navy font-semibold shadow-lg hover:scale-[1.02] transition-transform"
+          className="flex flex-col md:flex-row items-center gap-1 md:gap-3 p-2 md:px-4 md:py-3 md:mx-2 rounded-xl bg-gradient-to-r from-teal to-mint text-navy font-semibold shadow-lg hover:scale-[1.02] transition-transform flex-shrink-0"
         >
-          <FaCalculator className="text-xl" />
-          <span className="text-base">GST Calculator</span>
+          <FaCalculator className="text-2xl md:text-xl" />
+          <span className="text-xs md:text-base hidden md:block">GST</span>
         </Link>
-      </div>
-      {/* Logout button at the bottom */}
-      <button
-        onClick={() => signOut({ callbackUrl: "/api/auth/signin" })}
-        className="flex items-center gap-3 px-4 py-3 m-4 mb-30 rounded-lg bg-red-600 hover:bg-red-700 transition-colors text-white"
-      >
-        <FaSignOutAlt className="text-xl" />
-        <span className="text-base">Logout</span>
-      </button>
+        <button
+          onClick={() => signOut({ callbackUrl: "/api/auth/signin" })}
+          className="flex flex-col md:flex-row items-center gap-1 md:gap-3 p-2 md:px-4 md:py-3 md:m-4 md:mb-30 rounded-lg bg-red-600 hover:bg-red-700 transition-colors text-white flex-shrink-0"
+        >
+          <FaSignOutAlt className="text-2xl md:text-xl" />
+          <span className="text-xs md:text-base hidden md:inline">Logout</span>
+        </button>
+      </nav>
     </aside>
   );
 }

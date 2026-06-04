@@ -179,7 +179,7 @@ export default function BillingPage() {
   };
 
   return (
-    <div className="p-8 bg-gradient-to-b from-mint to-cream min-h-screen">
+    <div className="p-4 md:p-8 bg-gradient-to-b from-mint to-cream min-h-screen">
       {/* KPIs */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
         <Card
@@ -236,8 +236,8 @@ export default function BillingPage() {
 
       {/* Add Bill Form Modal */}
       {showForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-          <div className="bg-white p-6 rounded shadow-lg min-w-[320px] relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 p-4">
+          <div className="bg-white p-6 rounded shadow-lg w-full max-w-lg max-h-[90vh] overflow-y-auto relative">
             <button
               className="absolute top-2 right-2 text-gray-500 hover:text-black"
               onClick={() => setShowForm(false)}
@@ -245,7 +245,7 @@ export default function BillingPage() {
               &times;
             </button>
             <form className="flex flex-col gap-3" onSubmit={handleAddBill}>
-              <div className="flex flex-row gap-2 mb-4">
+              <div className="flex flex-col sm:flex-row gap-2 mb-4">
                 <input
                   className="border p-2 rounded"
                   required
@@ -289,7 +289,7 @@ export default function BillingPage() {
               <div>
                 <div className="font-semibold mb-1">Line Items</div>
                 {form.lineItems.map((li, idx) => (
-                  <div key={idx} className="flex gap-2 mb-2">
+                  <div key={idx} className="flex flex-col sm:flex-row gap-2 mb-2">
                     <input
                       className="border p-2 rounded"
                       required
@@ -392,7 +392,7 @@ export default function BillingPage() {
 
       {/* Invoice Table */}
       <div className="overflow-x-auto bg-cream rounded shadow">
-        <table className="min-w-full text-sm">
+        <table className="min-w-full text-sm responsive-table">
           <thead>
             <tr className="bg-mint text-navy">
               <th className="py-2 px-4">Invoice #</th>
@@ -409,23 +409,23 @@ export default function BillingPage() {
           <tbody>
             {bills.map((bill) => (
               <tr key={bill._id} className="border-b border-mint">
-                <td className="py-2 px-4">{bill.invoiceNumber}</td>
-                <td className="py-2 px-4">{bill.dateIssued?.slice(0, 10)}</td>
-                <td className="py-2 px-4">{bill.customerName}</td>
-                <td className="py-2 px-4">{bill.saleRef}</td>
-                <td className="py-2 px-4">
+                <td className="py-2 px-4" data-label="Invoice #">{bill.invoiceNumber}</td>
+                <td className="py-2 px-4" data-label="Date">{bill.dateIssued?.slice(0, 10)}</td>
+                <td className="py-2 px-4" data-label="Customer">{bill.customerName}</td>
+                <td className="py-2 px-4" data-label="Sale Ref">{bill.saleRef}</td>
+                <td className="py-2 px-4" data-label="Amount">
                   <FaRupeeSign className="inline text-teal mr-1" />
                   {bill.totalAmount}
                 </td>
-                <td className="py-2 px-4">
+                <td className="py-2 px-4" data-label="Paid">
                   <FaRupeeSign className="inline text-teal mr-1" />
                   {bill.amountPaid}
                 </td>
-                <td className="py-2 px-4">
+                <td className="py-2 px-4" data-label="Due">
                   <FaRupeeSign className="inline text-teal mr-1" />
                   {Number(bill.totalAmount) - Number(bill.amountPaid)}
                 </td>
-                <td className="py-2 px-4">
+                <td className="py-2 px-4" data-label="Status">
                   {bill.status === "Paid" && (
                     <span className="text-green-600 font-semibold">Paid</span>
                   )}
@@ -441,7 +441,7 @@ export default function BillingPage() {
                     <span className="text-red-600 font-semibold">Overdue</span>
                   )}
                 </td>
-                <td className="py-2 px-4">
+                <td className="py-2 px-4" data-label="Actions">
                   {/* Actions: View, Edit, Mark as Paid, etc. */}
                   <button className="bg-mint text-navy px-2 py-1 rounded text-xs mr-2">
                     View

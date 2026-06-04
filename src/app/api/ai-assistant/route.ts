@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
     // Fetch all relevant data from database
     const [items, sales, bills, udhaar] = await Promise.all([
       Items.find().lean(),
-      Sale.find().sort({ date: -1 }).limit(100).lean(),
+      Sale.find().lean(), // Fetch all sales to match dashboard sums
       Bill.find().sort({ date: -1 }).limit(50).lean(),
       Udhaar.find().lean(),
     ]);
@@ -25,7 +25,15 @@ export async function POST(request: NextRequest) {
     // Calculate key metrics
     const totalInventoryValue = Number(items.reduce((sum, item) => sum + (Number(item.totalCost) || 0), 0));
     const lowStockItems = items.filter(item => item.status === 'Low Stock' || item.status === 'Out of Stock');
+    const totalSalesOrders = sales.length;
     const totalSales = Number(sales.reduce((sum, sale) => sum + (Number(sale.totalRevenue) || 0), 0));
+    
+    // Outstanding Udhaar matches dashboard logic
+    const totalUdhaarOutstanding = Number(udhaar
+      .filter((u: any) => u.status !== 'Paid')
+      .reduce((sum, u) => sum + (Number(u.amount) - (Number(u.paidAmount) || 0)), 0)
+    );
+    // Total Udhaar created over time
     const totalUdhaar = Number(udhaar.reduce((sum, u) => sum + (Number(u.amount) || 0), 0));
     
     // Get party-wise udhaar details
@@ -35,14 +43,15 @@ export async function POST(request: NextRequest) {
       status: u.status,
       dueDate: u.dueDate,
       paidAmount: Number(u.paidAmount) || 0,
+      outstanding: Number(u.amount) - (Number(u.paidAmount) || 0)
     }));
     
-    // Get top selling items
+    // Get top selling items robustly (mirroring dashboard logic)
     const productSales: { [key: string]: number } = {};
     sales.forEach((sale: any) => {
       if (sale.products && Array.isArray(sale.products)) {
         sale.products.forEach((product: any) => {
-          const name = product.productName || product.name;
+          const name = product.productName || product.name || product.title || "Unknown Product";
           if (name) {
             productSales[name] = (productSales[name] || 0) + (Number(product.quantity) || 0);
           }
@@ -65,10 +74,12 @@ export async function POST(request: NextRequest) {
         status: item.status,
       })),
       topSellingItems,
-      totalSales: totalSales.toFixed(2),
-      totalUdhaar: totalUdhaar.toFixed(2),
+      totalSalesOrders,
+      totalSalesRevenue: totalSales.toFixed(2), // Matches dashboard "Total Revenue"
+      totalUdhaarOutstanding: totalUdhaarOutstanding.toFixed(2), // Matches dashboard "Udhaar Outstanding"
+      totalUdhaarHistory: totalUdhaar.toFixed(2),
       udhaarByParty,
-      recentSales: sales.slice(0, 10).map((sale: any) => ({
+      recentSales: sales.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 10).map((sale: any) => ({
         date: sale.date,
         amount: sale.totalRevenue,
         customer: sale.customerName,
